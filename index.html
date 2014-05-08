@@ -1,14 +1,39 @@
 <html>
 	<head>
+		<link rel="stylesheet" href="bot.css" />
+		<script>
+var url = 'http://localhost/staticigbot?index.html';
+function lose_referer() {
+	// chrome loses it in data uris
+	location = "data:text/html,<script>location='" + url + '&_=' + Math.random() + "'</scr"+"ipt>";
+	return false;
+}
+
+function lose_in_ie() {
+	// ie loses referer in window.open()
+	window.open(url + '&_='+Math.random());
+}
+
+function lose_in_ff() {
+	location = 'data:text/html,<html><meta http-equiv="refresh" content="0; url='+ url + '"></html>';
+}
+
+function post_and_lose() {
+	location = 'data:text/html,<html><meta http-equiv="refresh" content="0; url=data:text/html,<form id=f method=post action=\''+url+'\'></form><script>document.getElementById(\'f\').submit()</scri'+'pt>"></html>';
+}
+//lose_referer();
+//post_and_lose();
+</script>
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.4.0/cookies.min.js"></script>
 		<script type="text/javascript" src="bot.js"></script>
+
 	</head>
 	<body>
 		Tag :: <input type="textbox" id="tags" name="tags" value="" />
 		Token :: <input type="textbox" id="token" name="token" value="" />
 		<input type="button" id="startbot" value="Start" />
-
+		<img src="" id="current_image" />
 		<div id="logs"></div>
 	</body>
 </html>
