@@ -21,7 +21,9 @@ $(document).ready(function(){
 });
 
 function getImages(){
-var token = $("#token").val();
+
+
+	var token = $("#token").val();
 	var tags = $("#tags").val();
 
 	if(!tags) {alert('tag is empty'); return;}
@@ -79,5 +81,8 @@ function likeImage(token){
     		
   		}
   	});
+}
+function log(msg){
+	$("#logs").append('<br />'+url.tag);
 }
 
