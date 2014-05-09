@@ -1,4 +1,5 @@
 var images = [];
+var count = 0;
 $(document).ready(function(){
 
 
@@ -15,15 +16,22 @@ $("#startbot").click(function(){
 	Cookies.set('token', $("#token").val());
 	Cookies.set('tags', $("#tags").val());
 	
-	var token = $("#token").val();
+	getImages();
+
+});
+
+});
+
+function getImages(){
+var token = $("#token").val();
 	var tags = $("#tags").val();
 
-	if(tags.length === 0) {alert('tag is empty');}
-	
+	if(!tags) {alert('tag is empty'); return;}
+	if(!token) {alert('token is empty');return;}
 	
 
 	var url = {
-		tag:'https://api.instagram.com/v1/tags/'+tags[0]+'/media/recent?access_token='+token
+		tag:'https://api.instagram.com/v1/tags/'+tags+'/media/recent?access_token='+token
 	};
 	
 	
@@ -38,19 +46,17 @@ $("#startbot").click(function(){
     		for(var i=0; i<images.length; i++){
 //    			$("#logs").append('<br />'+images[i].id + '<img style="width:40px;height:40px;" src="' + images[i].images.low_resolution.url + '" />');
     		}
-  	}});
-
-});
-
-});
+  	}});	
+}
 
 function likeImage(token){
 	if(images.length === 0){
-
+		getImages();
+		return;
 	}
 
 	image = images.pop();
-	$("#current_image").attr('src', image.images.thumbnail.url);
+	//$("#current_image").attr('src', image.images.thumbnail.url);
 
 	var url = 'https://api.instagram.com/v1/media/'+image.id+'/likes?access_token='+token;
 
@@ -63,13 +69,20 @@ function likeImage(token){
 		success:function(result){
 			//alert('ok');
     		$("#logs").append('<br />'+url +' - ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - ');
-    		likeImage(token);
-  		}, error:function(error){
-  			//alert('error'+JSON.stringify(error));
-  			$("#logs").append('<br />err - '+url +' - ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - ');
+    		$("#imgs_logs").append('<img src="'+image.images.low_resolution.url+'" />');
+    		
     		setTimeout(function(){
     			likeImage(token)
-    		},2000);
+    		},1000);
+  		}, error:function(error){
+  			//alert('error'+JSON.stringify(error));
+  			//$("#logs").append('<br />- ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - ';
+  			$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');
+  			count++;
+  			$("#status").html("total liked = "+count);
+    		setTimeout(function(){
+    			likeImage(token)
+    		},1000);
     		
   		}
   	});
