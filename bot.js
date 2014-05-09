@@ -2,6 +2,7 @@ var hash = {};
 var images = [];
 var count = 0;
 $(document).ready(function(){
+	$('#addsometags').click(function(){$('#tags').val('photooftheday\ncars\nmyanmar');});
 
 	if(!$("#token").val() && Cookies.get('token')){
 		$("#token").val(Cookies.get('token'));
@@ -25,7 +26,12 @@ function getImages(){
 
 	var token = $("#token").val();
 	var tags = $("#tags").val();
+	tags = tags.split("\n");
+	for(var i=0; i<tags.length;i++){
 
+	}
+	tags = tags[0];
+	
 	if(!tags) {alert('tag is empty'); return;}
 	if(!token) {alert('token is empty');return;}
 	
@@ -39,7 +45,7 @@ function getImages(){
 		url:url.tag,
 		dataType: 'jsonp',
 		success:function(result){
-			$("#logs").append('<br />'+url.tag);
+			log(url.tag);
     		images = result.data;
     		likeImage(token);
   	}});	
@@ -83,6 +89,6 @@ function likeImage(token){
   	});
 }
 function log(msg){
-	$("#logs").append('<br />'+url.tag);
+	$("#logs").append(msg+'<br />');
 }
 
