@@ -1,41 +1,52 @@
 <html>
 	<head>
+		<link href="http://bootswatch.com/flatly/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="bot.css?1" />
-		<script>
-var url = 'http://localhost/staticigbot?index.html';
-function lose_referer() {
-	// chrome loses it in data uris
-	location = "data:text/html,<script>location='" + url + '&_=' + Math.random() + "'</scr"+"ipt>";
-	return false;
-}
 
-function lose_in_ie() {
-	// ie loses referer in window.open()
-	window.open(url + '&_='+Math.random());
-}
-
-function lose_in_ff() {
-	location = 'data:text/html,<html><meta http-equiv="refresh" content="0; url='+ url + '"></html>';
-}
-
-function post_and_lose() {
-	location = 'data:text/html,<html><meta http-equiv="refresh" content="0; url=data:text/html,<form id=f method=post action=\''+url+'\'></form><script>document.getElementById(\'f\').submit()</scri'+'pt>"></html>';
-}
-//lose_referer();
-//post_and_lose();
-</script>
-		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.4.0/cookies.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.4.0/cookies.min.js"></script>
 		<script type="text/javascript" src="bot.js?8"></script>
 
 	</head>
 	<body>
-		Tag :: <input type="textbox" id="tags" name="tags" value="" />
-		Token :: <input type="textbox" id="token" name="token" value="" />
-		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=44b4035977a44ea880eb852eb65117dc&redirect_uri=http://yemaw.me&response_type=token&scope=likes+comments">Get Token</a>
-		<input type="button" id="startbot" value="Start" /><span id="status"></span>
-		<img src="" id="current_image" />
-		<div id="imgs_logs"></div>
-		<div id="logs"></div>
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-md-4 left-panel">
+		    	<div class="row" style="margin:0px 15px;">
+		    		<h4>Tokens</h4>
+		    		<input type="textbox" id="token" class="token" name="token" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=44b4035977a44ea880eb852eb65117dc&redirect_uri=http://yemaw.me&response_type=token&scope=likes+comments">Get Token</a>
+		    	</div>
+		    	<hr />
+		    	<div class="row" style="margin:0px 15px;">
+		    		<h4>Tags</h4><input type="textbox" id="tags" name="tags" value="" /><br />
+			    	<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="textbox" id="tags[]" class="tag" name="tags" value="" /><br/>
+					<input type="button" id="addtag" class="btn btn-sm btn-info" value="Add Tag" />
+				</div>
+				<hr />
+				<div class="row text-center"><br />
+					<input type="button" id="startbot" class="btn btn-large btn-success" value="Start" />
+				</div>
+		    </div>
+		    <div class="col-md-8">
+		    		<div id="status" class="text-center"></div>
+
+		    		<img src="" id="current_image" />
+					<div id="imgs_logs"></div>
+					<div id="logs"></div>
+		    </div>
+		  </div>
+		</div>
+
+		
 	</body>
 </html>

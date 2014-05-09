@@ -1,3 +1,4 @@
+var hash = {};
 var images = [];
 var count = 0;
 $(document).ready(function(){
