@@ -1,4 +1,3 @@
-
 var images = [];
 $(document).ready(function(){
 	
@@ -82,28 +81,4 @@ xmlhttp.send();
 	 });
 */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
