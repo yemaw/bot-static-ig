@@ -2,23 +2,20 @@ var images = [];
 var count = 0;
 $(document).ready(function(){
 
+	if(!$("#token").val() && Cookies.get('token')){
+		$("#token").val(Cookies.get('token'));
+	}
+	if(!$("#tags").val() && Cookies.get('tags')){
+		$("#tags").val(Cookies.get('tags'));
+	}
 
-if(!$("#token").val() && Cookies.get('token')){
-	$("#token").val(Cookies.get('token'));
-}
-if(!$("#tags").val() && Cookies.get('tags')){
-	$("#tags").val(Cookies.get('tags'));
-}
+	$("#startbot").click(function(){
 
-$("#startbot").click(function(){
-
-
-	Cookies.set('token', $("#token").val());
-	Cookies.set('tags', $("#tags").val());
-	
-	getImages();
-
-});
+		Cookies.set('token', $("#token").val());
+		Cookies.set('tags', $("#tags").val());
+		
+		getImages();
+	});
 
 });
 
@@ -42,10 +39,6 @@ var token = $("#token").val();
 			$("#logs").append('<br />'+url.tag);
     		images = result.data;
     		likeImage(token);
-
-    		for(var i=0; i<images.length; i++){
-//    			$("#logs").append('<br />'+images[i].id + '<img style="width:40px;height:40px;" src="' + images[i].images.low_resolution.url + '" />');
-    		}
   	}});	
 }
 
@@ -67,15 +60,14 @@ function likeImage(token){
 		url:'http://node.yemaw.me/get2post/get2post/get2post?url='+url,
 		dataType: 'jsonp',
 		success:function(result){
-			//alert('ok');
-    		$("#logs").append('<br />'+url +' - ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - ');
+			
+    		//$("#logs").append('<br />'+url +' - ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - ');
     		$("#imgs_logs").append('<img src="'+image.images.low_resolution.url+'" />');
     		
     		setTimeout(function(){
     			likeImage(token)
     		},1000);
   		}, error:function(error){
-  			//alert('error'+JSON.stringify(error));
   			//$("#logs").append('<br />- ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - ';
   			$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');
   			count++;
@@ -86,37 +78,5 @@ function likeImage(token){
     		
   		}
   	});
-/*
-xmlhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-
-    $("#logs").append('<br />'+url +' - ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - '+ JSON.stringify(xmlhttp.responseText));
-			likeImage(token);
-		
-    }
-  }
-xmlhttp.open("POST",url,true);
-xmlhttp.send();
-*/
-/*
-	$.post(url,{}, function(data,status,xhr){
-		$("#logs").append('<br />'+url +' - ' +image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - '+ JSON.stringify(data));
-			likeImage(token);
-		}, "jsonp");*/
-	/*
-	$.post({
-		url:url,
-	 	type:'POST',
-		dataType: 'jsonp',
-		success:function(result){
-			
-			$("#logs").append('<br />'+image.id + ' - <a href="' + image.link + '" >'+image.link+'</a> - '+ JSON.stringify(result));
-			likeImage(token);
-		}
-	 });
-*/
 }
 
