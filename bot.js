@@ -1,6 +1,8 @@
-var hash = {};
+var tags_table = [];
+
 var images = [];
 var count = 0;
+
 $(document).ready(function(){
 	$('#addsometags').click(function(){$('#tags').val('photooftheday\ncars\nmyanmar');});
 
@@ -16,24 +18,65 @@ $(document).ready(function(){
 		Cookies.set('token', $("#token").val());
 		Cookies.set('tags', $("#tags").val());
 		
-		getImages();
+		startBot();
 	});
 
 });
 
-function getImages(){
-
-
+function startBot(){
 	var token = $("#token").val();
 	var tags = $("#tags").val();
 	tags = tags.split("\n");
-	for(var i=0; i<tags.length;i++){
-
+	if(tags.length === 0){
+		alert('tags are empty');return;
 	}
-	tags = tags[0];
-	
-	if(!tags) {alert('tag is empty'); return;}
 	if(!token) {alert('token is empty');return;}
+
+	hash = []; //reset the global hash table
+
+	//initialize hash with tags
+	for(var i=0; i<tags.length;i++){
+		hash[i] = {tag:tags[i].trim(),token:token}
+	}
+
+	
+	async.eachSeries(tags_table, getImagesForATag, function(error){ //fill with images data into hash
+
+		async.eachSeries(tags_table, proceedATagFormTagTable, function(error){
+			
+		});
+	});
+
+}
+
+function getImagesForATag(tag, callback){
+
+	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+tag.token;
+	$.ajax({
+		url:url,
+		dataType: 'jsonp',
+		success:function(result){
+			tag.meta = result.meta;
+			tag.data = result.data;
+			tag.pagination = result.pagination;
+			callback();
+  	}});
+}
+
+function proceedATagFormTagTable(tag, callback){
+
+}
+
+function likeAnImage(image, callback){
+	//var url = 'https://api.instagram.com/v1/media/'+image.data.id+'/likes?access_token='+image.token;
+	console.log('url');
+	callback();
+}
+
+function getImages(){
+
+	
+	tags = tags[0];//tmp
 	
 
 	var url = {
