@@ -17,6 +17,10 @@
 		    		<h4>Tokens</h4>
 		    		<input type="textbox" id="token" class="token" name="token" value="" /> 
 		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=44b4035977a44ea880eb852eb65117dc&redirect_uri=http://yemaw.me&response_type=token&scope=likes+comments">Get Token</a>
+		    		<input type="textbox" id="tokens[]" class="token" name="token" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=44b4035977a44ea880eb852eb65117dc&redirect_uri=http://yemaw.me&response_type=token&scope=likes+comments">Get Token</a>
+		    		<input type="textbox" id="tokens[]" class="token" name="token" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=44b4035977a44ea880eb852eb65117dc&redirect_uri=http://yemaw.me&response_type=token&scope=likes+comments">Get Token</a>
 		    	</div>
 		    	<hr />
 		    	<div class="row" style="margin:0px 15px;">
@@ -28,14 +32,19 @@
 				<div class="row text-center"><br />
 					<input type="button" id="startbot" class="btn btn-large btn-success" value="Start" />
 				</div>
+				<hr />
+				<div class="row" style="padding:10px 15px;">
+	    			<input type="checkbox" id="img_log_on" checked="checked" /> Log Liked Images.
+	    			<br />
+		    		<input type="checkbox" id="console_log_on" checked="checked" /> Log Other Informations.
+	    		</div>				
 		    </div>
 		    <div class="col-md-8">
 		    		<div id="status" class="text-center"></div>
-
 		    		<img src="" id="current_image" />
 					<div id="imgs_logs"></div>
 					<hr />
-					<div id="logs"></div>
+					<div id="console_logs"></div>
 		    </div>
 		  </div>
 		</div>
