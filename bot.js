@@ -32,47 +32,89 @@ function startBot(){
 	}
 	if(!token) {alert('token is empty');return;}
 
-	hash = []; //reset the global hash table
+	tags_table = []; //reset the global hash table
 
 	//initialize hash with tags
 	for(var i=0; i<tags.length;i++){
-		hash[i] = {tag:tags[i].trim(),token:token}
+		tags_table[i] = {tag:tags[i].trim(),token:token}
 	}
-
+	var table_index = 0;
 	
 	async.eachSeries(tags_table, getImagesForATag, function(error){ //fill with images data into hash
-
-		async.eachSeries(tags_table, proceedATagFormTagTable, function(error){
+		//all filled with images data. 
+		log('filled');
+		
+		async.forever(function(callback){
 			
-		});
-	});
 
+			var current_tag = tags_table[table_index];
+			
+			var current_tag_image = current_tag.data[current_tag.current_index];
+			console.log(table_index + " " + current_tag.current_index);
+			likeAnImage(current_tag_image,function(){
+
+				table_index = (table_index === tags_table.length-1) ? 0 : table_index+1;
+				//var a =tags_table.length-1;
+				//console.log(" => " +table_index+ " "+ a);
+				current_tag.current_index = (current_tag.current_index === current_tag.current_index.lenght-1) ? 0 : current_tag.current_index+1;
+				
+				setTimeout(function(){
+					callback();
+				},1000);
+				
+			});
+
+		}, function(error){
+			console.log(error);
+		});
+	
+	});
+	
 }
 
 function getImagesForATag(tag, callback){
-
-	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+tag.token;
+	
+	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+Cookies.get('token');
 	$.ajax({
 		url:url,
 		dataType: 'jsonp',
 		success:function(result){
+			
 			tag.meta = result.meta;
 			tag.data = result.data;
 			tag.pagination = result.pagination;
+
+			tag.current_index = 0;
+			
 			callback();
   	}});
 }
 
-function proceedATagFormTagTable(tag, callback){
-
-}
 
 function likeAnImage(image, callback){
-	//var url = 'https://api.instagram.com/v1/media/'+image.data.id+'/likes?access_token='+image.token;
-	console.log('url');
-	callback();
+	var url = 'https://api.instagram.com/v1/media/'+image.id+'/likes?access_token='+image.id;
+	
+
+	$.ajax({
+		url:'http://node.yemaw.me/get2post/get2post/get2post?url='+url,
+		dataType: 'jsonp',
+		success:function(result){
+			
+			$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');
+  			$("#status").html("total liked = "+count);
+    		callback();
+
+  		}, error:function(error){
+  			
+  			$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');
+  			$("#status").html("total liked = "+count);
+    		callback();
+  		}
+  	});
 }
 
+
+/**/
 function getImages(){
 
 	
