@@ -1,7 +1,7 @@
 var tags_table = [];
 
 var images = [];
-var count = 0;
+var count = 0; //tmp
 
 $(document).ready(function(){
 	$('#addsometags').click(function(){$('#tags').val('photooftheday\ncars\nmyanmar');});
@@ -36,27 +36,32 @@ function startBot(){
 
 	//initialize hash with tags
 	for(var i=0; i<tags.length;i++){
-		tags_table[i] = {tag:tags[i].trim(),token:token}
+		var url = 'https://api.instagram.com/v1/tags/'+tags[i]+'/media/recent?access_token='+getAToken()
+		tags_table[i] = {tag:tags[i].trim(), url:url, data:[]}
 	}
-	var table_index = 0;
+	var current = 0;
 	
 	async.eachSeries(tags_table, getImagesForATag, function(error){ //fill with images data into hash
 		//all filled with images data. 
-		log('filled');
+		
 		
 		async.forever(function(callback){
 			
 
-			var current_tag = tags_table[table_index];
-			
-			var current_tag_image = current_tag.data[current_tag.current_index];
-			console.log(table_index + " " + current_tag.current_index);
-			likeAnImage(current_tag_image,function(){
+			var tag = tags_table[current];
+			var image = tags_table[current].data[0];
 
-				table_index = (table_index === tags_table.length-1) ? 0 : table_index+1;
-				//var a =tags_table.length-1;
-				//console.log(" => " +table_index+ " "+ a);
-				current_tag.current_index = (current_tag.current_index === current_tag.current_index.lenght-1) ? 0 : current_tag.current_index+1;
+			likeAnImage(image,function(){
+
+				tags_table[current].data.shift();
+				if(tags_table[current].data.length < 3){
+					getImagesForATag(tags_table[current],function(){});
+				}
+
+
+				current = (current === tags_table.length-1) ? 0 : current+1;
+				
+				//tag.current_index = (tag.current_index === tag.current_index.lenght-1) ? 0 : tag.current_index+1;
 				
 				setTimeout(function(){
 					callback();
@@ -74,18 +79,20 @@ function startBot(){
 
 function getImagesForATag(tag, callback){
 	
-	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+tag.token;
 	$.ajax({
-		url:url,
+		url:tag.url,
 		dataType: 'jsonp',
 		success:function(result){
 			
 			tag.meta = result.meta;
-			tag.data = result.data;
+			for(var i=0; i<result.data.length; i++){
+				tag.data.push(result.data[i]);
+			}
 			tag.pagination = result.pagination;
-
-			tag.current_index = 0;
 			
+			tag.url = result.pagination.next_url;
+
+			logText('Tag::#'+tag.tag+ '. Loaded '+result.data.length+" new images. Total "+tag.data.length+' in queue.');
 			callback();
   	}});
 }
@@ -93,26 +100,40 @@ function getImagesForATag(tag, callback){
 
 function likeAnImage(image, callback){
 	var url = 'https://api.instagram.com/v1/media/'+image.id+'/likes?access_token='+Cookies.get('token');
-	console.log(url);
-
+	
 	$.ajax({
 		url:'http://node.yemaw.me/get2post/get2post/get2post?url='+url,
 		dataType: 'jsonp',
 		success:function(result){
 			
-			$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');
+			logImage(image);
   			$("#status").html("total liked = "+count);
     		callback();
 
   		}, error:function(error){
   			
-  			$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');
+  			logImage(image);
   			$("#status").html("total liked = "+count);
     		callback();
   		}
   	});
 }
 
+function getAToken(){
+	return Cookies.get('token');
+}
+
+function logText(msg){
+	if($('#console_log_on').is(':checked')){
+		$("#console_logs").append(msg+'<br />');
+	}
+}
+
+function logImage(image){
+	if($('#img_log_on').is(':checked')){
+		$("#imgs_logs").append('<a href="' + image.link + '" target="_blank"><img src="'+image.images.low_resolution.url+'" /></a>');	
+	}	
+}
 
 /**/
 function getImages(){
@@ -173,7 +194,5 @@ function likeImage(token){
   		}
   	});
 }
-function log(msg){
-	$("#logs").append(msg+'<br />');
-}
+
 
