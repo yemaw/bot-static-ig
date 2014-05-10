@@ -74,7 +74,7 @@ function startBot(){
 
 function getImagesForATag(tag, callback){
 	
-	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+Cookies.get('token');
+	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+tag.token;
 	$.ajax({
 		url:url,
 		dataType: 'jsonp',
@@ -92,8 +92,8 @@ function getImagesForATag(tag, callback){
 
 
 function likeAnImage(image, callback){
-	var url = 'https://api.instagram.com/v1/media/'+image.id+'/likes?access_token='+image.id;
-	
+	var url = 'https://api.instagram.com/v1/media/'+image.id+'/likes?access_token='+Cookies.get('token');
+	console.log(url);
 
 	$.ajax({
 		url:'http://node.yemaw.me/get2post/get2post/get2post?url='+url,
