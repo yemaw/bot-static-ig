@@ -2,8 +2,6 @@ var running = false;
 var tags_table = [];
 var tokens_table = [];
 
-var images = [];
-var count = 0; //tmp
 
 $(document).ready(function(){
 	
@@ -13,7 +11,7 @@ $(document).ready(function(){
 	$("#save_tokens").click(function(){if(running){return;}setTokensTable();location.reload();});
 	$("#save_tags").click(function(){if(running){return;}setTagsTable();location.reload();});
 	
-	$("#add_some_tags").click(function(){if(running){return;}$('#tags').val('cars\nmyanmar');});
+	$("#add_some_tags").click(function(){if(running){return;}$('#tags').val('cars\nmyanmar\ngoogle\nyangon\nmandalay\nscenery\nsunset');});
 
 	$("#startbot").click(function(){
 		startBot();
@@ -60,6 +58,8 @@ function startBot(){
 			var image = tags_table[current].data[0];
 
 			likeAnImage(image,function(){
+				
+				updateStatusForNewLikedImage();
 
 				tags_table[current].data.shift();
 				if(tags_table[current].data.length <= 5){
@@ -70,7 +70,7 @@ function startBot(){
 				
 				setTimeout(function(){
 					callback();
-				},1000);
+				},getIntervalMS());
 				
 			});
 
@@ -112,14 +112,12 @@ function likeAnImage(image, callback){
 		success:function(result){
 			
 			logImage(image);
-  			$("#status").html("total liked = "+count);
-    		callback();
+  			callback();
 
   		}, error:function(error){
   			
   			logImage(image);
-  			$("#status").html("total liked = "+count);
-    		callback();
+  			callback();
   		}
   	});
 }
@@ -129,6 +127,11 @@ function getAToken(){
 	token_index = (token_index === tokens_table.length-1) ? 0 : token_index+1;
 	return tokens_table[token_index];
 }
+
+function getIntervalMS(){
+	return 500;//tmp
+}
+
 
 function logText(msg){
 	if($('#console_log_on').is(':checked')){
@@ -146,6 +149,12 @@ function disableInputs(){
 	$("#startbot").val('Started').removeClass('btn-success').addClass('btn-disabled');
 	$("#tags").attr('disabled','disabled');
 	$(".token").attr('disabled','disabled');
+}
+
+var total_liked_count = 0;
+function updateStatusForNewLikedImage(){
+	total_liked_count++;
+	$("#status").html('Total: '+total_liked_count);
 }
 
 function setTokensTable(){
