@@ -83,9 +83,12 @@ function startBot(){
 }
 
 function getImagesForATag(tag, callback){
-	var url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+getAToken();
+	if(!tag.url){
+		tag.url = 'https://api.instagram.com/v1/tags/'+tag.tag+'/media/recent?access_token='+getAToken();	
+	}
+	
 	$.ajax({
-		url:url,
+		url:tag.url,
 		dataType: 'jsonp',
 		success:function(result){
 			
