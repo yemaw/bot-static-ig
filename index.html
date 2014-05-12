@@ -1,5 +1,6 @@
 <html>
 	<head>
+<<<<<<< HEAD
 		<link rel="stylesheet" href="bot.css" />
 		<script>
 var url = 'http://localhost/staticigbot?index.html';
@@ -35,5 +36,69 @@ function post_and_lose() {
 		<input type="button" id="startbot" value="Start" />
 		<img src="" id="current_image" />
 		<div id="logs"></div>
+=======
+		<link href="http://bootswatch.com/flatly/bootstrap.min.css" rel="stylesheet">
+		<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="bot.css?2" />
+
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.4.0/cookies.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/async/0.8.0/async.js"></script>
+		<script type="text/javascript" src="bot.js?10"></script>
+
+	</head>
+	<body>
+		<div id="header">
+		  	<i class="fa fa-instagram fa-2x"></i> Instagram Bot
+		</div>
+		<div class="container-fluid">
+		  <div class="row">
+		    <div class="col-md-4 left-panel">
+		    	<div class="row" style="margin:0px 15px;">
+		    		<h4 class="header">Tokens</h4>
+		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=d3932e35a9844831809abe51094e32e0&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php?&response_type=token&scope=likes">Get Token</a>
+		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=e1eaf52dd6904249ac6f6cd43f00cad6&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
+		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=8e4cdd23557e4ff6831b81bc69da0aa0&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
+		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=f1a15105af1e4f73b730aeea60b55b97&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
+		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
+		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=f01007917cf34ce58b3e3eaa1b3a8e23&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
+		    		<br />
+		    		<a href="#" id="save_tokens">Save tokens</a> | <a href="#" id="reset_tokens">Reset tokens</a>
+		    	</div>
+		    	<hr />
+		    	<div class="row" style="margin:0px 15px;">
+		    		<h4 class="header">Tags</h4>
+		    		<span class="help_text">(Seperate tags by new line.)</span>
+		    		<textarea  id="tags"></textarea><br />
+					<a id="add_some_tags" href="#">Get Sample Tags</a> | <a id="save_tags" href="#">Save Tags</a> | <a id="reset_tags" href="#">Reset Tags</a>
+				</div>
+				<hr />
+				<div class="row text-center">
+					<input type="button" id="startbot" class="btn btn-large btn-success" value="Start" />
+				</div>
+				<hr />
+				<div class="row" style="padding:10px 15px;">
+				 	<h4 class="header">Options</h4>
+	    			<input type="checkbox" id="img_log_on" checked="checked" /> Log Liked Images.
+	    			<br />
+		    		<input type="checkbox" id="console_log_on" checked="checked" /> Log Other Informations.
+	    		</div>				
+		    </div>
+		    <div class="col-md-8">
+		    		<div id="status" class="text-center">Total: 0</div>
+		    		<img src="" id="current_image" />
+					<div id="imgs_logs"></div>
+					<hr />
+					<div id="console_logs"></div>
+		    </div>
+		  </div>
+		</div>
+
+		
+>>>>>>> 7e3a349de16efad08ec4a7bbc401b0ad131c6636
 	</body>
 </html>
