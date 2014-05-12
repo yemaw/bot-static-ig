@@ -1,4 +1,5 @@
 var running = false;
+var started = false;
 var tags_table = [];
 var tokens_table = [];
 
@@ -33,6 +34,17 @@ $(document).ready(function(){
 });
 
 function startBot(){
+	if(running === true){
+		pauseBot();
+		logText("Paused");
+		return;
+	}
+	if(running === false && started === true){
+		resumeBot();
+		logText("Resumed");
+		return;
+	}
+
 	
 	if(isNaN(parseInt($("#interval_seconds").val()))){
 		alert("Interval is Invilid");
@@ -55,33 +67,41 @@ function startBot(){
 		
 		//all ok now disabling input fields
 		disableInputs();
+		started = true;
+		running = true;
+		logText("Started");
 		
 		async.forever(function(callback){
-			if(tags_table[current].data.length === 0){
-				logText('Tag::#'+tags_table[current].tag+'. Reaching end of list. Can not continue for this tag.');
-				callback();
-			}
 
-			var tag = tags_table[current];
-			var image = tags_table[current].data[0];
-
-			likeAnImage(image,function(){
-				
-				updateStatusForNewLikedImage();
-
-				tags_table[current].data.shift();
-				if(tags_table[current].data.length <= 5){
-					getImagesForATag(tags_table[current],function(){});
-				}
-
-				current = (current === tags_table.length-1) ? 0 : current+1;
-				
+			if(running === false){
 				setTimeout(function(){
 					callback();
-				},getIntervalMS());
-				
-			});
+				},getIntervalMS());	
+			} else {
+				if(tags_table[current].data.length === 0){
+					logText('Tag::#'+tags_table[current].tag+'. Reaching end of list. Can not continue for this tag.');
+					callback();
+				}
 
+				var tag = tags_table[current];
+				var image = tags_table[current].data[0];
+
+				likeAnImage(image,function(){
+					
+					updateStatusForNewLikedImage();
+
+					tags_table[current].data.shift();
+					if(tags_table[current].data.length <= 5){
+						getImagesForATag(tags_table[current],function(){});
+					}
+
+					current = (current === tags_table.length-1) ? 0 : current+1;
+					
+					setTimeout(function(){
+						callback();
+					},getIntervalMS());					
+				});
+			}
 		}, function(error){
 			console.log(error);
 		});
@@ -145,8 +165,11 @@ function getIntervalMS(){
 
 
 function logText(msg){
+	var currentdate = new Date(); 
+	var datetime =  currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
 	if($('#console_log_on').is(':checked')){
-		$("#console_logs").append(msg+'<br />');
+		$("#console_logs").append(datetime + " " + msg+'<br />');
 	}
 }
 
@@ -157,9 +180,18 @@ function logImage(image){
 }
 
 function disableInputs(){
-	$("#startbot").val('Started').removeClass('btn-success').addClass('btn-disabled');
+	$("#startbot").val('Pause').removeClass('btn-success').addClass('btn-disabled');
 	$("#tags").attr('disabled','disabled');
 	$(".token").attr('disabled','disabled');
+}
+
+function pauseBot(){
+	running = false;
+	$("#startbot").val('Resume').removeClass('btn-disabled').addClass('btn-success');
+}
+function resumeBot(){
+	running = true;
+	$("#startbot").val('Pause').removeClass('btn-success').addClass('btn-disabled');
 }
 
 var total_liked_count = 0;
