@@ -80,27 +80,31 @@ function startBot(){
 			} else {
 				if(tags_table[current].data.length === 0){
 					logText('Tag::#'+tags_table[current].tag+'. Reaching end of list. Can not continue for this tag.');
-					callback();
-				}
-
-				var tag = tags_table[current];
-				var image = tags_table[current].data[0];
-
-				likeAnImage(image,function(){
-					
-					updateStatusForNewLikedImage();
-
-					tags_table[current].data.shift();
-					if(tags_table[current].data.length <= 5){
-						getImagesForATag(tags_table[current],function(){});
-					}
-
 					current = (current === tags_table.length-1) ? 0 : current+1;
-					
 					setTimeout(function(){
 						callback();
-					},getIntervalMS());					
-				});
+					},getIntervalMS());	
+				} else {
+					var tag = tags_table[current];
+					var image = tags_table[current].data[0];
+
+					likeAnImage(image,function(){
+						
+						updateStatusForNewLikedImage();
+
+						tags_table[current].data.shift();
+						//Pre loading image list
+						if(tags_table[current].data.length <= 5){
+							getImagesForATag(tags_table[current],function(){});
+						}
+
+						current = (current === tags_table.length-1) ? 0 : current+1;
+						
+						setTimeout(function(){
+							callback();
+						},getIntervalMS());					
+					});
+				}
 			}
 		}, function(error){
 			console.log(error);
