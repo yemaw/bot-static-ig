@@ -18,17 +18,21 @@
 		  <div class="row">
 		    <div class="col-md-4 left-panel">
 		    	<div class="row" style="margin:0px 15px;">
-		    		<h4 class="header">Tokens</h4>
-		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
-		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=d3932e35a9844831809abe51094e32e0&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php?&response_type=token&scope=likes">Get Token</a>
-		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
-		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=e1eaf52dd6904249ac6f6cd43f00cad6&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
-		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
-		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=8e4cdd23557e4ff6831b81bc69da0aa0&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
-		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
-		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=f1a15105af1e4f73b730aeea60b55b97&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
-		    		<input type="textbox" class="token" name="tokens[]" value="" /> 
-		    		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=f01007917cf34ce58b3e3eaa1b3a8e23&redirect_uri=http://php.yemaw.me/staticigbot/redirect.php&response_type=token&scope=likes">Get Token</a>
+		    		<div class="note well">
+		    			<h4>Note</h4>
+		    			Instagram do not allow to generate access tokens from client side anymore. You may want to generate access tokens at <a class="important" target="_blank" href="http://www.pinceladasdaweb.com.br/instagram/access-token/">http://www.pinceladasdaweb.com.br/instagram/access-token/</a>. Please put <i><b class="important">&scope=likes</b></i> at the end of url on your instagram permission page.
+		    			</div>
+		    		<h4 class="header">Access Tokens</h4>
+		    		<input type="textbox" class="token form-control" name="tokens[]" value="" /> 
+		    		<!--<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=cf6296c5047f460e8e4d1d7634673025&redirect_uri=projects.yemaw.me/StaticIGBot/redirect.php?&response_type=token&scope=likes">Get Token</a>-->
+		    		<input type="textbox" class="token form-control" name="tokens[]" value="" /> 
+		    		<!--<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=cf6296c5047f460e8e4d1d7634673025&redirect_uri=projects.yemaw.me/StaticIGBot/redirect.php&response_type=token&scope=likes">Get Token</a>-->
+		    		<input type="textbox" class="token form-control" name="tokens[]" value="" /> 
+		    		<!--<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=cf6296c5047f460e8e4d1d7634673025&redirect_uri=projects.yemaw.me/StaticIGBot/redirect.php&response_type=token&scope=likes">Get Token</a>-->
+		    		<input type="textbox" class="token form-control" name="tokens[]" value="" /> 
+		    		<!--<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=cf6296c5047f460e8e4d1d7634673025&redirect_uri=projects.yemaw.me/StaticIGBot/redirect.php&response_type=token&scope=likes">Get Token</a>-->
+		    		<input type="textbox" class="token form-control" name="tokens[]" value="" /> 
+		    		<!--<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=cf6296c5047f460e8e4d1d7634673025&redirect_uri=projects.yemaw.me/StaticIGBot/redirect.php&response_type=token&scope=likes">Get Token</a>-->
 		    		<br />
 		    		<a href="#" id="save_tokens">Save tokens</a> | <a href="#" id="reset_tokens">Reset tokens</a>
 		    	</div>

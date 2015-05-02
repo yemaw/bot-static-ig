@@ -140,17 +140,19 @@ function getImagesForATag(tag, callback){
 
 function likeAnImage(image, callback){
 	var url = 'https://api.instagram.com/v1/media/'+image.id+'/likes?access_token='+getAToken();
+	console.log(url);
+	url = encodeURIComponent(url);
 	
 	$.ajax({
-		url:'http://node.yemaw.me/get2post/get2post/get2post?url='+url,
+		url:'http://projects.yemaw.me/StaticIGBot/get2post.php?url='+url,
 		dataType: 'jsonp',
 		success:function(result){
-			
+			console.log(result);
 			logImage(image);
   			callback();
 
   		}, error:function(error){
-  			
+  			console.log(error);
   			logImage(image);
   			callback();
   		}

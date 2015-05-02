@@ -1,15 +1,18 @@
 
 .left-panel{}
-.token{width:80%;margin:3px 0px;}
+.token{margin:3px 0px;}
 .tag{margin:3px 0px;}
 #status{height:40px;text-align:left;padding:5px;}
 #tags{width:90%;height:200px;margin:5px 0px;}
 #startbot{width:80%;margin:0px 20px 0px 20px;}
-#console_logs{width:100%; height:150px;overflow:scroll;border: 1px solid #a0a0a0;padding:5px;font-size:10px;font-family:Terminal;color:green;background:black;}
-#imgs_logs{width:100%; height:400px;overflow:scroll;border: 1px solid #a0a0a0;}
+#console_logs{width:100%; height:250px;overflow:scroll;border: 1px solid #a0a0a0;padding:5px;font-size:10px;font-family:Terminal;color:green;background:black;}
+#imgs_logs{width:100%; height:500px;overflow:scroll;border: 1px solid #a0a0a0;}
 #imgs_logs img{display:inline;width:50px;height:50px;border:1px solid #e0e0e0;border-radius:1px;margin:1px;}
 
 hr{margin:5px 0px;}
 #header{margin:0px 0px 10px 0px;height: 50px; background: #2c3e50;color:#ecf0f1;padding:5px 40px;font-size: 20px;}
 .header{margin:3px 0px;}
 .help_text{font-size:12px;color:#444444;}
+
+.important{color:#e74c3c;}
+.note{font-size:11px;}
